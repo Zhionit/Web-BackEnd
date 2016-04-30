@@ -1,0 +1,74 @@
+<?php
+
+	require_once 'mysql_login.php'
+
+	class Database
+	{
+		/**
+		* Instancias de la clase
+		**/
+		private static $db =  null;
+
+		/**
+		* Instancia de DPO 
+		* Para este caso te compartiré un patrón singleton de PDO para limitar el número de aperturas a la base de datos en una sola. 
+		* Con ello podremos disponer de un solo objeto a través de todo el proyecto.
+		**/
+		private static $dpo = null;
+
+		// Constructor
+
+		final private function __construct()
+		{
+			try 
+			{
+				self::getDb();
+			} catch (PDOException $e) {
+				
+			}
+		}
+
+		// Retorno de la instancia de la clase
+		public static function getInstance()
+		{
+			if (self::$db === null) 
+			{
+				self::$db = new self();
+			}
+
+			return self::$db;
+		}
+
+		public function getDB()
+		{
+			if (self::$pdo === null) 
+			{
+				self::$pdo = new PDO(
+					'mysql:dbname=' . DATABASE .
+					';host=' . HOSTNAME .
+					';port=63343;', 
+					USERNAME,
+					PASSWORD,
+					array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8")
+					);
+
+				// Habilitar excepciones
+            	self::$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+			}
+
+			resturn self::$pdo;
+		}
+
+		final protected function __clone()
+		{
+
+		}
+
+		function destructor()
+		{
+			self::$pdo = null;
+		}
+
+	}
+
+?>
