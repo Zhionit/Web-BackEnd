@@ -1,2 +1,5 @@
-# Web-BackEnd
-Creado para guadar fragmentos de código hechos para la web 
+# WebService
+Es un web service básico con un patrón singelton de DPO
+
+Basado en:
+https://github.com/indieteq/indieteq-php-my-sql-pdo-database-class
